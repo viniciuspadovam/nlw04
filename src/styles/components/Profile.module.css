@@ -1,0 +1,27 @@
+.profileContainer {
+  display: flex;
+  align-items: center;
+}
+/* O sinal de maior ">" representa a seleção somente da primeira linha de tags filhas selecionadas pelo css.
+   Por exemplo, nesse caso, somente a <img> dentro deste container será estilizada, se houvesse outra
+   <img> dentro de outra <div>, dentro deste container, ela não será selecionada. */
+.profileContainer > img {
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+}
+.profileContainer div {
+  margin-left: 1.5rem;
+}
+.profileContainer div strong {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--title);
+}
+.profileContainer div p {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+.profileContainer div p img {
+  margin-right: 0.5rem;
+}
