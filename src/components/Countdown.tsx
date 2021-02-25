@@ -1,56 +1,26 @@
-import { useContext, useEffect, useState } from 'react';
-import { ChallengesContexts } from '../contexts/ChallengesContexts';
+import { useContext } from 'react';
+import { CountdownContext } from '../contexts/CountdownContext';
+
 import styles from '../styles/components/Countdown.module.css';
 
-let countdownTimeout: NodeJS.Timeout;
-
 export function Countdown() {
-  const { startNewChallenge } = useContext(ChallengesContexts);
-
-  const [time, setTime] = useState(25 * 60);
-  const [isActive, setIsActive] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
-
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-
-  // padStart é um método da String que fará uma verificação na string.
-  // Neste caso, se ela tiver menos de 2 caracteres, este método ira completar com um 0 os caracteres à esquerda
+  const {
+    hasFinished,
+    isActive,
+    minutes,
+    seconds,
+    resetCountdown,
+    startCountdown,
+  } = useContext(CountdownContext);
+  /*
+   * Para que o Countdown possa ser resetado quando o desafio for finalizado,
+   * é necessário criar um contexto para o Countdown.
+   *
+   * Os minutos e segundos separados não vão para o contexto pois são uma rega da interface desse comoponente
+   * e não uma regra de negócio para a aplicação.
+   */
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
-
-  function startCountdown() {
-    setIsActive(true);
-  }
-
-  function resetCountdown() {
-    clearTimeout(countdownTimeout);
-    setIsActive(false);
-    setTime(25 * 60);
-  }
-
-  // ------------------------------------------------------------------------------------------------------------
-  /*
-   * Responsável por fazer o timer iniciar.
-   *
-   * Sempre que o 'active' ou o 'time' mudarem, o callback do useEffect será acionado,
-   * portanto acionando o setTimeout, que irá subtrair 1 de 'time' através do setTime e,
-   * mudando o 'time', todo o cilco se reinicia até ele chegar a 0 ou o 'active' ter seu
-   * valor alterado para false.
-   *
-   */
-  useEffect(() => {
-    countdownTimeout = setTimeout(() => {
-      if (isActive && time > 0) {
-        setTime(time - 1);
-      } else if (isActive && time === 0) {
-        setHasFinished(true);
-        setIsActive(false);
-        startNewChallenge();
-      }
-    }, 1000);
-  }, [isActive, time]);
-  // ------------------------------------------------------------------------------------------------------------
 
   return (
     <div>
