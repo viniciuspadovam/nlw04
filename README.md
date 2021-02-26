@@ -1,6 +1,6 @@
-![Moveit Logo](public/logo-full.png)
+<div style="text-align: center;"> <img src="public/logo-full.png" alt="Moveit Logo"> </div><br>
 
----
+![GitHub](https://img.shields.io/github/license/viniciuspadovam/nlw04)
 
 ## Getting Started
 
