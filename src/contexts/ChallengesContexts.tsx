@@ -1,4 +1,7 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import { LevelUpModal } from '../components/LevelUpModal';
+import Cookies from 'js-cookie';
+
 // Retorna um Array com todos os dados do JSON.
 import challenges from '../../challenges.json';
 
@@ -18,31 +21,52 @@ interface contextDataType {
   startNewChallenge: () => void;
   resetChallenge: () => void;
   completeChallenge: () => void;
+  closeLevelUpModal: () => void;
 }
 
 interface challengesProviderProps {
   // ReactNpde é a tipagem usada quando o a tipagem do elemento passado também é um componente React.
   children: ReactNode;
+  level: number;
+  currentXp: number;
+  challengesCompleted: number;
 }
 
 export const ChallengesContexts = createContext({} as contextDataType);
 
-export function ChallengesProvider({ children }: challengesProviderProps) {
-  const [level, setLevel] = useState(1);
-  const [currentXp, setCurrentXp] = useState(0);
-  const [challengesCompleted, setChallengesCompletes] = useState(0);
+export function ChallengesProvider({
+  children,
+  ...rest
+}: challengesProviderProps) {
+  const [level, setLevel] = useState(rest.level ?? 1);
+  const [currentXp, setCurrentXp] = useState(rest.currentXp ?? 0);
+  const [challengesCompleted, setChallengesCompletes] = useState(
+    rest.challengesCompleted ?? 0
+  );
 
   const [activeChallenge, setActiveChallenge] = useState(null);
+  const [isLevelUpModalActive, setIsLevelUpModalActive] = useState(false);
 
   const xpToNextLevel = Math.pow((level + 1) * 4, 2);
 
   function levelUp() {
     setLevel(level + 1);
+    setIsLevelUpModalActive(true);
+  }
+
+  function closeLevelUpModal() {
+    setIsLevelUpModalActive(false);
   }
 
   useEffect(() => {
     Notification.requestPermission();
   }, []);
+
+  useEffect(() => {
+    Cookies.set('level', String(level));
+    Cookies.set('currentXp', String(currentXp));
+    Cookies.set('challengesCompleted', String(challengesCompleted));
+  }, [level, currentXp, challengesCompleted]);
 
   function startNewChallenge() {
     const randomChallengeIndex = Math.floor(Math.random() * challenges.length);
@@ -96,9 +120,12 @@ export function ChallengesProvider({ children }: challengesProviderProps) {
         resetChallenge,
         xpToNextLevel,
         completeChallenge,
+        closeLevelUpModal,
       }}
     >
       {children}
+
+      {isLevelUpModalActive && <LevelUpModal />}
     </ChallengesContexts.Provider>
   );
 }
