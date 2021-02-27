@@ -16,3 +16,10 @@
   gap: 6.25rem;
   align-items: center;
 }
+
+@media (max-width: 1200px) {
+  .container {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}
