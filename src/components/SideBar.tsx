@@ -19,7 +19,7 @@ export function SideBar() {
             <i className="fas fa-home"></i>
           </a>
         </Link>
-        <Link href="/">
+        <Link href="/pomodoro">
           <a>
             <i className="far fa-hourglass"></i>
           </a>
