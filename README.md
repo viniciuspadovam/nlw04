@@ -1,7 +1,9 @@
-![Moveit Logo](public/logo-full.png)  
-
 ![GitHub](https://img.shields.io/github/license/viniciuspadovam/nlw04)
 ![NLW04](https://img.shields.io/badge/Next%20Level%20Week-04-blueviolet)
+
+<p align="center">
+  <img src="public/logo-full.png" alt="MoveIt Logo" />
+</p> 
 
 ## 📖 Sobre
 
