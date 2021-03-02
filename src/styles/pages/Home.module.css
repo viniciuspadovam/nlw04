@@ -23,3 +23,19 @@
     padding-bottom: 0.5rem;
   }
 }
+
+@media (max-width: 1220px) {
+  .container {
+    height: 85vh;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 845px) {
+  .container section {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem;
+  }
+}
